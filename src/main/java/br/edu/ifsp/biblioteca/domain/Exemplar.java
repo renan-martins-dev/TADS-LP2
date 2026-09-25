@@ -1,5 +1,7 @@
 package br.edu.ifsp.biblioteca.domain;
 
+import java.util.List;
+
 public class Exemplar {
 
     private Long id;
@@ -35,6 +37,21 @@ public class Exemplar {
 
     public void setStatus(EStatusExemplar status) {
         this.status = status;
+    }
+
+    public void emprestar() {
+        if(this.status == EStatusExemplar.EMPRESTADO) {
+            throw new IllegalStateException("Exemplar " + this.codigo + " já está emprestado!!!");
+        }
+        this.status = EStatusExemplar.EMPRESTADO;
+    }
+
+    public void devolver() {
+        this.status = EStatusExemplar.DISPONIVEL;
+    }
+
+    public boolean estaDisponivel() {
+        return this.status == EStatusExemplar.DISPONIVEL;
     }
 
     public Livro getLivro() {
