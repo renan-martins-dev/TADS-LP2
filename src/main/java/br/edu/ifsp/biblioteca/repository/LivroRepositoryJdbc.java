@@ -29,19 +29,24 @@ public class LivroRepositoryJdbc implements ILivroRepository {
     public Livro salvar(Livro livro) {
         try(Connection conexao = this.dataSource.getConnection()) {
             conexao.setAutoCommit(false);
-            if(livro.getId()==null){
-                this.inserirLivro(conexao, livro);
-            }
-            else{
-                this.atualizarLivro(conexao, livro);
-            }
+           try{
+               if(livro.getId()==null){
+                   this.inserirLivro(conexao, livro);
+               }
+               else{
+                   this.atualizarLivro(conexao, livro);
+               }
 
-            this.salvarAutores(conexao, livro);
-            this.salvarExemplares(conexao, livro);
+               this.salvarAutores(conexao, livro);
+               this.salvarExemplares(conexao, livro);
 
-            conexao.commit();
+               conexao.commit();
+           } catch (SQLException erro) {
+               conexao.rollback();
+               throw erro;
+           }
         }
-        catch(SQLException erro){
+        catch(SQLException erro) {
             throw new IllegalStateException("Falha ao salvar o livro", erro);
         }
         return livro;
@@ -56,7 +61,7 @@ public class LivroRepositoryJdbc implements ILivroRepository {
                     comando.executeUpdate();
                     try (ResultSet rs = comando.getGeneratedKeys()) {
                         if (rs.next()) {
-                            Autor.setId(rs.getLong(1));
+                            autor.setId(rs.getLong(1));
                         }
                     }
                 }
@@ -148,7 +153,7 @@ public class LivroRepositoryJdbc implements ILivroRepository {
             try(ResultSet resultado = comando.executeQuery()){
                 while(resultado.next()){
                     Autor autor = new Autor(resultado.getString("nome"));
-                    Autor.setId(resultado.getLong("id"));
+                    autor.setId(resultado.getLong("id"));
                     livro.adicionarAutor(autor);
                 }
             }

@@ -13,7 +13,7 @@ public class Autor {
         return this.id;
     }
 
-    public static void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
