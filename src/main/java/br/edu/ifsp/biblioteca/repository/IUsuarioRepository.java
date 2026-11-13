@@ -7,11 +7,8 @@ import java.util.Optional;
 
 public interface IUsuarioRepository {
 
-    Usuario salvar(Usuario usuario);
+    Optional<Usuario> findByEmailIgnoreCase(String email);
 
-    Optional<Usuario> buscarPorId(Long id);
+    boolean existsByEMailIgnoreCase(String email)
 
-    Optional<Usuario> buscarPorEmail(String email);
-
-    List<Usuario> listarTodos();
 }
