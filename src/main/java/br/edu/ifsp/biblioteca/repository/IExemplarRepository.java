@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface IExemplarRepository extends JpaRepository<Exemplar, Long> {
     Optional<Exemplar> findByCodigo(String codigo);
-    List<Exemplar> finrdByIdAndStatus(Long livroId, EStatusExemplar status)
+    List<Exemplar> findByIdAndStatus(Long livroId, EStatusExemplar status);
 
-    long countByLivroId(Long livroId, EStatusExemplar status);
+    long countByLivroId(Long livroId);
 }

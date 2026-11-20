@@ -38,5 +38,5 @@ public interface ILivroRepository extends JpaRepository<Livro, Long> {
      */
     Page<Livro> findByTituloContainingIgnoreCase(String trechoTitulo, Pageable pagina);
 
-    List<Livro> buscarPorTitulo(String titulo);
+    //List<Livro> buscarPorTitulo(String titulo);
 }

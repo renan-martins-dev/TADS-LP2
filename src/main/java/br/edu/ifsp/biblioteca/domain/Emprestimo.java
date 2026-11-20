@@ -37,7 +37,7 @@ public class Emprestimo {
         this.usuario = usuario;
         this.exemplar = exemplar;
         this.dataEmprestimo = dataEmprestimo;
-        this.dataPrevistaDevolucao = dataEmprestimo.plusDays();
+        this.dataPrevistaDevolucao = dataEmprestimo.plusDays(PRAZO_EM_DIAS);
     }
 
     public boolean isAtivo() {
